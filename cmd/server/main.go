@@ -8,6 +8,7 @@ import (
 func home(w http.ResponseWriter, r *http.Request){
 	if r.URL.Path != "/"{
 		http.NotFound(w,r)
+		return
 	}
 		w.Write([]byte("welcome to the home page "))
 
@@ -24,10 +25,11 @@ func snippetview(w http.ResponseWriter, r *http.Request){
 }
 
 func snippetcreate(w http.ResponseWriter, r *http.Request){
-	if r.Method != "POST"{
+	if r.Method != http.MethodPost{
 		w.Header().Set("Allow","POST")
-		w.WriteHeader(403)
+		w.WriteHeader(405)
 		w.Write([]byte("Method not allowed"))
+		return
 	}
 	w.Write([]byte("This creating a snippet view "))
 }
