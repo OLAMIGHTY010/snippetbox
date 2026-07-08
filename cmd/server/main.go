@@ -14,10 +14,9 @@ func home(w http.ResponseWriter, r *http.Request){
 
 }
 func snippetview(w http.ResponseWriter, r *http.Request){
-	if r.Method != "POST"{
+	if r.Method != http.MethodPost{
 		w.Header().Set("Allow","POST")
-		w.WriteHeader(405)
-		w.Write([]byte("Method not Allowed"))
+		http.Error(w, "method not allowed ", 405)
 		return
 	}
 	w.Write([]byte("this is the snippetview"))
@@ -27,8 +26,7 @@ func snippetview(w http.ResponseWriter, r *http.Request){
 func snippetcreate(w http.ResponseWriter, r *http.Request){
 	if r.Method != http.MethodPost{
 		w.Header().Set("Allow","POST")
-		w.WriteHeader(405)
-		w.Write([]byte("Method not allowed"))
+		http.Error(w, "method not allowed", 405)
 		return
 	}
 	w.Write([]byte("This creating a snippet view "))
